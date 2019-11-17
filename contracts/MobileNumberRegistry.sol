@@ -10,13 +10,12 @@ contract MobileNumberRegistry {
     }
 
     address private contractOwner;
-
     mapping (string => MobileNumberData) registry;
-
     mapping (address => bool) administrators;
 
     constructor() public {
         contractOwner = msg.sender;
+        administrators[msg.sender] = true;
     }
 
     modifier onlyOwner() {
@@ -24,6 +23,14 @@ contract MobileNumberRegistry {
         _;
     }
 
+    modifier onlyAdministrator() {
+        require(isAdministrator(msg.sender), "Only administrators are allowed to to this!");
+        _;
+    }
+
+    function getOwner() public view returns(address) {
+        return contractOwner;
+    }
 
     function addAdministrator(address _addr) public onlyOwner {
         administrators[_addr] = true;
@@ -36,13 +43,6 @@ contract MobileNumberRegistry {
     function isAdministrator(address _addr) public view returns(bool) {
         return administrators[_addr];
     }
-
-
-    modifier onlyAdministrator() {
-        require(isAdministrator(msg.sender), "Only administrators are allowed to to this!");
-        _;
-    }
-
 
     function addMobileNumber(string memory _mobileNumber,
                                 string memory _photoHash,
