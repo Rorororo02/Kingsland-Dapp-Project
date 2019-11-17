@@ -1,0 +1,29 @@
+{
+  "name": "DApp",
+  "version": "1.0.0",
+  "description": "Kingsland University Decentralized App Project",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "solidity-coverage": "^0.6.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "truffle test",
+    "test:coverage": "solidity-coverage"
+  },
+
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rorororo02/Kingsland-Dapp-Project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rorororo02/Kingsland-Dapp-Project/issues"
+  },
+  "homepage": "https://github.com/Rorororo02/Kingsland-Dapp-Project#readme"
+}

@@ -32,16 +32,16 @@ contract MobileNumberRegistry {
         return contractOwner;
     }
 
+    function isAdministrator(address _addr) public view returns(bool) {
+        return administrators[_addr];
+    }
+
     function addAdministrator(address _addr) public onlyOwner {
         administrators[_addr] = true;
     }
 
     function deleteAdministrator(address _addr) public onlyOwner {
         administrators[_addr] = false;
-    }
-
-    function isAdministrator(address _addr) public view returns(bool) {
-        return administrators[_addr];
     }
 
     function addMobileNumber(string memory _mobileNumber,
