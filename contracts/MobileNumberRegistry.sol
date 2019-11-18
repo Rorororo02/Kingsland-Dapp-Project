@@ -4,7 +4,6 @@ pragma solidity ^0.5.8;
 contract MobileNumberRegistry {
 
     struct MobileNumberData {
-        string photoHash;
         string lastName;
         string firstName;
     }
@@ -36,21 +35,19 @@ contract MobileNumberRegistry {
         return administrators[_addr];
     }
 
-    function addAdministrator(address _addr) public onlyOwner {
-        administrators[_addr] = true;
-    }
+    // function addAdministrator(address _addr) public onlyOwner {
+    //     administrators[_addr] = true;
+    // }
 
-    function deleteAdministrator(address _addr) public onlyOwner {
-        administrators[_addr] = false;
-    }
+    // function deleteAdministrator(address _addr) public onlyOwner {
+    //     administrators[_addr] = false;
+    // }
 
     function addMobileNumber(string memory _mobileNumber,
-                                string memory _photoHash,
                                 string memory _lastName,
                                 string memory _firstName) public onlyAdministrator {
 
         registry[_mobileNumber] = MobileNumberData({
-            photoHash : _photoHash,
             lastName : _lastName,
             firstName : _firstName
         });
@@ -59,17 +56,16 @@ contract MobileNumberRegistry {
 
     function deleteMobileNumber(string memory _mobileNumber) public onlyAdministrator {
         registry[_mobileNumber] = MobileNumberData({
-            photoHash : "",
             lastName : "",
             firstName : ""
         });
     }
 
     function checkMobileNumber(string memory _mobileNumber) public view
-                        returns(string memory, string memory, string memory) {
+                        returns(string memory, string memory) {
 
         MobileNumberData memory md = registry[_mobileNumber];
 
-        return(md.photoHash, md.lastName, md.firstName);
+        return(md.lastName, md.firstName);
     }
 }

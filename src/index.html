@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blockchain Wallet Project</title>
+    <link rel="shortcut icon" href="/img/favicon.ico"/>
+
+    <link rel="stylesheet" href="/bootstrap4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+
+
+    <script src="/js/jquery-3.4.1.min.js"></script>
+    <script src="/js/popper.min.js"></script>
+    <script src="/bootstrap4/js/bootstrap.min.js"></script>
+    <script src="/js/mobile-number-registry.js"></script>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Decentralized Mobile Number Registry</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse float-right" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#" id="linkHome">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="linkRegisterMobileNumber">Register Mobile Number</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="linkVerifyMobileNumber">Verify Mobile Number</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="loadingBox">Loading ...</section>
+
+    <section id="infoBox"><header>x</header><p>Info</p></section>
+
+    <section id="errorBox"><header>x</header><p>Error</p></section>
+
+
+    <section id="viewHome">
+        <div class="container">
+            <h1>Decentralized Mobile Number Registry</h1>
+            Welcome to the Decentralized Mobile Number Registry! This distributed app runs on the Ethereum blockchain network and holds a registry of mobile numbers as Solidity smart contract.
+            <ul>
+                <li><b>Contract owner</b> can register mobile number to be stored on the blockchain.</li>
+                <li><b>Users</b> can view the existence of a mobile number!</li>
+                <li>This application will help you avoid frauds and scams!</li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="viewRegisterMobileNumber">
+        <div class="container">
+            <h1>Register Mobile Number</h1>
+            <p>Contract owners can register (upload) new mobile number to the "Mobile Number Registry" smart contract on the Ethereum blockchain decentralized network.</p>
+            <div class="form-group">
+                <label for="idMobileNUmber">Mobile Number</label>
+                <input type="text" class="form-control" id="idMobileNumber"  placeholder="Enter mobile number">
+            </div>
+            <div class="form-group">
+                <label for="idLastName">Lastname</label>
+                <input type="text" class="form-control" id="idLastName"  placeholder="Enter Lastname">
+            </div>
+            <div class="form-group">
+                <label for="idFirstName">Firstanme</label>
+                <input type="text" class="form-control" id="idFirstName"  placeholder="Enter Firstname">
+            </div>
+            <button id="idMobileNumberSubmitButton" type="submit" class="btn btn-primary">Submit</button>
+
+        </div>
+    </section>
+
+    <section id="viewVerifyMobileNumber">
+        <div class="container">
+                <h1>Verify Mobile Number</h1>
+                <p>Blockchain users can verify mobile number on the Ethereum network. Know who is attempting to scam you!</p>
+
+                <div class="form-group">
+                    <label for="idMobileNUmber">Mobile Number</label>
+                    <input type="text" class="form-control" id="idMobileNumber"  placeholder="Enter mobile number">
+                </div>
+                <button id="idMobileNumberVerifyButton" type="submit" class="btn btn-primary">Verify</button>
+        </div>
+    </section>
+
+</body>
+</html>
+

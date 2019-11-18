@@ -29,38 +29,38 @@ contract("MobileNumberRegistry", async accounts => {
         assert.equal(await mr.isAdministrator.call(thirdAccount), true);
     });
 
-    it("delete administrator by owner", async() => {
-        await mr.deleteAdministrator(thirdAccount);
-        assert.equal(await mr.isAdministrator.call(secondAccount), false);
-    });
+    // it("delete administrator by owner", async() => {
+    //     await mr.deleteAdministrator(thirdAccount);
+    //     assert.equal(await mr.isAdministrator.call(secondAccount), false);
+    // });
 
 
-    it("add mobile number data by owner", async() => {
-        await mr.deleteAdministrator(secondAccount);
-        assert.equal(await mr.isAdministrator.call(secondAccount), false);
-    });
+    // it("add mobile number data by owner", async() => {
+    //     await mr.deleteAdministrator(secondAccount);
+    //     assert.equal(await mr.isAdministrator.call(secondAccount), false);
+    // });
 
-    it("add administrator by non owner", async() => {
-        let newMr = await MobileNumberRegistry.new({from: secondAccount});
+    // it("add administrator by non owner", async() => {
+    //     let newMr = await MobileNumberRegistry.new({from: secondAccount});
 
-        try {
-            await newMr.addAdministrator(thirdAccount);
-            assert.fail();
-        } catch (err) {
-            assert.ok(/revert/.test(err.message));
-        }
-    });
+    //     try {
+    //         await newMr.addAdministrator(thirdAccount);
+    //         assert.fail();
+    //     } catch (err) {
+    //         assert.ok(/revert/.test(err.message));
+    //     }
+    // });
 
-    it("delete administrator by non owner", async() => {
-        let newMr = await MobileNumberRegistry.new({from: secondAccount});
+    // it("delete administrator by non owner", async() => {
+    //     let newMr = await MobileNumberRegistry.new({from: secondAccount});
 
-        try {
-            await newMr.deleteAdministrator(thirdAccount);
-            assert.fail();
-        } catch (err) {
-            assert.ok(/revert/.test(err.message));
-        }
-    });
+    //     try {
+    //         await newMr.deleteAdministrator(thirdAccount);
+    //         assert.fail();
+    //     } catch (err) {
+    //         assert.ok(/revert/.test(err.message));
+    //     }
+    // });
 
 
     it("add mobile number by administrator", async() => {

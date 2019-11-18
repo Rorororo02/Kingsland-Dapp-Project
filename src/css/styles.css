@@ -1,0 +1,42 @@
+body > section {
+    margin-top: 50px;
+}
+
+
+#infoBox, #errorBox, #loadingBox {
+    width: 80%;
+    margin: 10px auto;
+    color: white;
+    text-align: center;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+#infoBox>header, #errorBox>header, #loadingBox>header {
+    float: right;
+    margin-right: 5px;
+}
+
+#infoBox>header:hover, #errorBox>header:hover, #loadingBox>header:hover {
+    transition: all 0.2s;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#loadingBox {
+    background: #7CB3E9;
+}
+#infoBox {
+    background: #393;
+}
+#errorBox {
+    background: #F50;
+}
+
+body > section {
+    display: none;
+}
+
+section#viewHome {
+    display: block;
+}
