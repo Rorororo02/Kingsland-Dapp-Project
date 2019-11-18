@@ -35,36 +35,36 @@ contract MobileNumberRegistry {
         return administrators[_addr];
     }
 
-    // function addAdministrator(address _addr) public onlyOwner {
-    //     administrators[_addr] = true;
-    // }
+    function addAdministrator(address _addr) public onlyOwner {
+        administrators[_addr] = true;
+    }
 
-    // function deleteAdministrator(address _addr) public onlyOwner {
-    //     administrators[_addr] = false;
-    // }
+    function deleteAdministrator(address _addr) public onlyOwner {
+        administrators[_addr] = false;
+    }
 
-    function addMobileNumber(string memory _mobileNumber,
+    function addMobileNumber(string memory _mobileNumberHash,
                                 string memory _lastName,
                                 string memory _firstName) public onlyAdministrator {
 
-        registry[_mobileNumber] = MobileNumberData({
+        registry[_mobileNumberHash] = MobileNumberData({
             lastName : _lastName,
             firstName : _firstName
         });
 
     }
 
-    function deleteMobileNumber(string memory _mobileNumber) public onlyAdministrator {
-        registry[_mobileNumber] = MobileNumberData({
+    function deleteMobileNumber(string memory _mobileNumberHash) public onlyAdministrator {
+        registry[_mobileNumberHash] = MobileNumberData({
             lastName : "",
             firstName : ""
         });
     }
 
-    function checkMobileNumber(string memory _mobileNumber) public view
+    function checkMobileNumber(string memory _mobileNumberHash) public view
                         returns(string memory, string memory) {
 
-        MobileNumberData memory md = registry[_mobileNumber];
+        MobileNumberData memory md = registry[_mobileNumberHash];
 
         return(md.lastName, md.firstName);
     }
