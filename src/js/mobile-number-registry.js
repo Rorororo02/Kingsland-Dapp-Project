@@ -1,6 +1,105 @@
 $(document).ready(function () {
-    const DocumentRegistryContractAddress = "";
-    const DocumentRegistryContractABI = []
+    const MobileNumberRegistryContractAddress = "0x48c168f858C875f02C542e7E7BE3f33A70E7479C";
+    const MobileNumberRegistryContractABI = [
+        {
+          "inputs": [],
+          "payable": false,
+          "stateMutability": "nonpayable",
+          "type": "constructor"
+        },
+        {
+          "constant": true,
+          "inputs": [],
+          "name": "getOwner",
+          "outputs": [
+            {
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "payable": false,
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "constant": true,
+          "inputs": [
+            {
+              "name": "_addr",
+              "type": "address"
+            }
+          ],
+          "name": "isAdministrator",
+          "outputs": [
+            {
+              "name": "",
+              "type": "bool"
+            }
+          ],
+          "payable": false,
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "constant": false,
+          "inputs": [
+            {
+              "name": "_mobileNumber",
+              "type": "string"
+            },
+            {
+              "name": "_lastName",
+              "type": "string"
+            },
+            {
+              "name": "_firstName",
+              "type": "string"
+            }
+          ],
+          "name": "addMobileNumber",
+          "outputs": [],
+          "payable": false,
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "constant": false,
+          "inputs": [
+            {
+              "name": "_mobileNumber",
+              "type": "string"
+            }
+          ],
+          "name": "deleteMobileNumber",
+          "outputs": [],
+          "payable": false,
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "constant": true,
+          "inputs": [
+            {
+              "name": "_mobileNumber",
+              "type": "string"
+            }
+          ],
+          "name": "checkMobileNumber",
+          "outputs": [
+            {
+              "name": "",
+              "type": "string"
+            },
+            {
+              "name": "",
+              "type": "string"
+            }
+          ],
+          "payable": false,
+          "stateMutability": "view",
+          "type": "function"
+        }
+      ]
 
     window.ethereum.enable();
 
@@ -23,7 +122,8 @@ $(document).ready(function () {
         // viewGetDocuments();
     });
 
-    // $('#documentUploadButton').click(uploadDocument);
+    $('#idMobileNumberSubmitButton').click(uploadMobileNumber);
+    $('#idMobileNumberVerifyButton').click(verifyMobileNumber);
 
     // Attach AJAX "loading" event listener
     $(document).on({
@@ -57,75 +157,51 @@ $(document).ready(function () {
         });
     }
 
-    // function uploadDocument() {
-    //     if($("#documentForUpload")[0].files.length == 0)
-    //         showError("Please select a file to upload.");
+    function uploadMobileNumber() {
+        let mobileNumber = $("#idMobileNumber").val();
+        let lastName = $('#idLastName').val();
+        let firstName = $("#idFirstName").val();
 
-    //     let fileReader = new FileReader();
+        if(mobileNumber === '' || mobileNumber === null)
+            return showError("Mobile Number is required!");
 
-    //     fileReader.onload = function () {
-    //         if(typeof web3 === 'undefined')
-    //             return showError("Please install Metamask to access the Ethereum Web3 API from your browser");
+        if(lastName === '' || lastName === null)
+            return showError("Lastname is required!");
 
-    //         let fileBuffer = Buffer.from(fileReader.result);
+        if(firstName === '' || firstName === null)
+            return showError("Firstname is required!");
 
-    //         let contract = web3.eth.contract(DocumentRegistryContractABI).at(DocumentRegistryContractAddress);
-    //         IPFS.files.add(fileBuffer, (err, result) => {
-    //             if(err)
-    //                 return showError(err);
-    //             if(result) {
-    //                 let ipfsHash = result[0].hash;
-    //                 contract.add(ipfsHash, function(err, txHash) {
-    //                     if(err)
-    //                         showError("Smart contract call failed: "  + err);
+        if(typeof web3 === 'undefined')
+            return showError("Please install Metamask to access the Ethereum Web3 API from your browser");
 
-    //                     showInfo(`Document ${ipfsHash}<b>successfuly added </b>to the regitry. Transaction hash: ${txHash}`);
-    //                 });
-    //             }
-    //         });
-    //     };
+        let contract = web3.eth.contract(MobileNumberRegistryContractABI).at(MobileNumberRegistryContractAddress);
 
-    //     fileReader.readAsArrayBuffer($("#documentForUpload")[0].files[0]);
-    // }
+        contract.addMobileNumber(mobileNumber, lastName, firstName, function(err, txHash) {
+            if(err)
+                showError("Smart contract call failed: "  + err);
 
-    // function viewGetDocuments() {
-    //     if(typeof web3 === 'undefined')
-    //         return showError("Please install Metamask to access the Ethereum Web3 API from your browser");
+            showInfo(`Mobile number ${mobileNumber} has been added successfully to the regitry. Transaction hash: ${txHash}`);
+        });
+    }
 
-    //     let contract = web3.eth.contract(DocumentRegistryContractABI).at(DocumentRegistryContractAddress);
+    function verifyMobileNumber() {
+        let mobileNumber = $("#idMobileNumberVerify").val();
 
-    //     contract.getDocumentsCount(function (err, result) {
-    //          if(err)
-    //             showError("Smart contract call failed: " + err);
+        if(mobileNumber === '' || mobileNumber === null)
+            return showError("Mobile Number is required!");
 
-    //         let documentCount = result.toNumber();
+        if(typeof web3 === 'undefined')
+            return showError("Please install Metamask to access the Ethereum Web3 API from your browser");
 
-    //         if(documentCount > 0) {
-    //             let html = $('<div>');
-    //             for(let i = 0; i < documentCount; i++) {
-    //                 contract.getDocument(i, function(err, result) {
-    //                     if(err)
-    //                         showError("Smart contract call failed: " + err);
+        let contract = web3.eth.contract(MobileNumberRegistryContractABI).at(MobileNumberRegistryContractAddress);
 
-    //                     let ipfsHash = result[0];
-    //                     let contractPublishDate = result[1];
-    //                     let div = $('<div>');
-    //                     let url = "https://ipfs.io/ipfs/" + ipfsHash;
+        contract.checkMobileNumber(mobileNumber, function (err, result) {
+            if(err)
+                showError("Smart contract call failed: " + err);
 
-    //                     let displayDate = new Date(contractPublishDate *1000).toLocaleString();
-    //                     console.log(displayDate);
-    //                     div.append(`<p>Document published on ${displayDate}</p>`);
-    //                     div.append($(`<img src="${url}">`));
+            showInfo(`The mobile number: ${mobileNumber} is owned by ${result[1]} ${result[1]}.`);
 
-    //                     html.append(div);
-    //                 });
-    //             }
-    //             html.append("</div>");
-    //             $("#viewGetDocuments").append(html);
-    //         } else {
-    //             $("#viewGetDocuments").append('<div> No documents in the registry</div>');
-    //         }
-    //     });
-    // }
+        });
+    }
 
 });
