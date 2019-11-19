@@ -1,135 +1,132 @@
 $(document).ready(function () {
-    const MobileNumberRegistryContractAddress = "0x85a753f7225154f3b910c7f282D3Fb3568B64F59";
+    const MobileNumberRegistryContractAddress = "0xD357263aC12A23e441CDDa889e5211084779fCe9";
     const MobileNumberRegistryContractABI =  [
-        {
-          "inputs": [],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "constructor"
-        },
-        {
-          "constant": true,
-          "inputs": [],
-          "name": "getOwner",
-          "outputs": [
-            {
-              "name": "",
-              "type": "address"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [
-            {
-              "name": "_addr",
-              "type": "address"
-            }
-          ],
-          "name": "isAdministrator",
-          "outputs": [
-            {
-              "name": "",
-              "type": "bool"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "constant": false,
-          "inputs": [
-            {
-              "name": "_addr",
-              "type": "address"
-            }
-          ],
-          "name": "addAdministrator",
-          "outputs": [],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "constant": false,
-          "inputs": [
-            {
-              "name": "_addr",
-              "type": "address"
-            }
-          ],
-          "name": "deleteAdministrator",
-          "outputs": [],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "constant": false,
-          "inputs": [
-            {
-              "name": "_mobileNumberHash",
-              "type": "string"
-            },
-            {
-              "name": "_lastName",
-              "type": "string"
-            },
-            {
-              "name": "_firstName",
-              "type": "string"
-            }
-          ],
-          "name": "addMobileNumber",
-          "outputs": [],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "constant": false,
-          "inputs": [
-            {
-              "name": "_mobileNumberHash",
-              "type": "string"
-            }
-          ],
-          "name": "deleteMobileNumber",
-          "outputs": [],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [
-            {
-              "name": "_mobileNumberHash",
-              "type": "string"
-            }
-          ],
-          "name": "checkMobileNumber",
-          "outputs": [
-            {
-              "name": "",
-              "type": "string"
-            },
-            {
-              "name": "",
-              "type": "string"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        }
-      ]
+      {
+        "inputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "getOwner",
+        "outputs": [
+          {
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [
+          {
+            "name": "_addr",
+            "type": "address"
+          }
+        ],
+        "name": "isAdministrator",
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "name": "_addr",
+            "type": "address"
+          }
+        ],
+        "name": "addAdministrator",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "name": "_addr",
+            "type": "address"
+          }
+        ],
+        "name": "deleteAdministrator",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "name": "_mobileNumberHash",
+            "type": "string"
+          },
+          {
+            "name": "_lastName",
+            "type": "string"
+          },
+          {
+            "name": "_firstName",
+            "type": "string"
+          },
+          {
+            "name": "_photoHash",
+            "type": "string"
+          }
+        ],
+        "name": "addMobileNumber",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [
+          {
+            "name": "_mobileNumberHash",
+            "type": "string"
+          }
+        ],
+        "name": "checkMobileNumber",
+        "outputs": [
+          {
+            "name": "",
+            "type": "string"
+          },
+          {
+            "name": "",
+            "type": "string"
+          },
+          {
+            "name": "",
+            "type": "string"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      }
+    ]
 
     window.ethereum.enable();
+
+    const IPFS = window.IpfsApi('localhost', '5001');
+    const Buffer = IPFS.Buffer;
 
     $('#linkHome').click(function () {
         showView("viewHome");
@@ -159,6 +156,7 @@ $(document).ready(function () {
         showView("viewVerifyMobileNumber");
         $('.nav-item').removeClass('active');
         $(this).parent().addClass("active");
+        $("#queryResult").empty();
     });
 
     $("#idAddAdministratorButton").click(addAdministrator);
@@ -189,6 +187,7 @@ $(document).ready(function () {
         $('#infoBox>header').click(function () {
             $('#infoBox').hide();
         });
+        $('#infoBox').delay(5000).fadeOut(300);
     }
 
     function showError(errorMsg) {
@@ -197,6 +196,7 @@ $(document).ready(function () {
         $('#errorBox>header').click(function () {
             $('#errorBox').hide();
         });
+        $('#errorBox').delay(5000).fadeOut(300);
     }
 
 
@@ -219,9 +219,9 @@ $(document).ready(function () {
                 return showError("Only the contract owner can add administrators!");
 
             showInfo(`Successfully added ${ethAddr} as and Administrator. Transaction hash: ${txHash}`);
+            $("#idAddAdminstratorAddress").val("");
         });
     }
-
 
     function removeAdministrator() {
         let ethAddr = $("#idRemoveAdminstratorAddress").val();
@@ -242,10 +242,15 @@ $(document).ready(function () {
                 return showError("Only the contract owner can remove administrators!");
 
             showInfo(`Successfully removed ${ethAddr} as an Administrator. Transaction hash: ${txHash}`);
+            $("#idRemoveAdminstratorAddress").val("");
         });
     }
 
+
     function uploadMobileNumber() {
+        if($("#idPhoto")[0].files.length == 0)
+            return showError("Please select a file to upload.");
+
         let mobileNumber = $("#idMobileNumber").val();
         let lastName = $('#idLastName').val();
         let firstName = $("#idFirstName").val();
@@ -253,28 +258,47 @@ $(document).ready(function () {
         if(mobileNumber === '' || mobileNumber === null)
             return showError("Mobile Number is required!");
 
-        if(lastName === '' || lastName === null)
-            return showError("Lastname is required!");
-
         if(firstName === '' || firstName === null)
             return showError("Firstname is required!");
 
+        if(lastName === '' || lastName === null)
+            return showError("Lastname is required!");
+
         let mobileHash = CryptoJS.SHA256(mobileNumber).toString();
 
-        if(typeof web3 === 'undefined')
-            return showError("Please install Metamask to access the Ethereum Web3 API from your browser");
+        let fileReader = new FileReader();
 
-        let contract = web3.eth.contract(MobileNumberRegistryContractABI).at(MobileNumberRegistryContractAddress);
+        fileReader.onload = function () {
+            if(typeof web3 === 'undefined')
+                return showError("Please install Metamask to access the Ethereum Web3 API from your browser");
 
-        contract.addMobileNumber(mobileHash, lastName, firstName, function(err, txHash) {
-            if(err)
-                return showError("Only administrators can add mobile number registry!");
+            let fileBuffer = Buffer.from(fileReader.result);
 
-            showInfo(`Mobile number ${mobileNumber} has been added successfully to the registry. Transaction hash: ${txHash}`);
-        });
+            let contract = web3.eth.contract(MobileNumberRegistryContractABI).at(MobileNumberRegistryContractAddress);
+            IPFS.files.add(fileBuffer, (err, result) => {
+                if(err)
+                    return showError(err);
+                if(result) {
+                    let ipfsHash = result[0].hash;
+                    contract.addMobileNumber(mobileHash, lastName, firstName, ipfsHash, function(err, txHash) {
+                      if(err)
+                          return showError("Only administrators can add mobile number registry!");
+
+                      showInfo(`Mobile number ${mobileNumber} has been added successfully to the registry. Transaction hash: ${txHash}`);
+                      $("#idMobileNumber").val("");
+                      $("#idFirstName").val("");
+                      $('#idLastName').val("");
+
+                  });
+                }
+            });
+        };
+
+        fileReader.readAsArrayBuffer($("#idPhoto")[0].files[0]);
     }
 
     function verifyMobileNumber() {
+        $("#queryResult").empty();
         let mobileNumber = $("#idMobileNumberVerify").val();
 
         if(mobileNumber === '' || mobileNumber === null)
@@ -291,12 +315,30 @@ $(document).ready(function () {
             if(err)
                 return showError("Failed to read from smart contract. Please try again later.");
 
-            showInfo(`The mobile number: ${mobileNumber} is owned by ${result[1]} ${result[0]}.`);
+            let firstName = result[0];
+            let lastName = result[1];
+            let photoHash = result[2];
+
+            if(firstName !== "" && lastName !== "" && photoHash !== "") {
+                let url = "http://ipfs.io/ipfs/" + photoHash;
+
+                var elem = `<div class="col col-md-4"><img src="${url}"></div>
+                            <div class="col col-md-8">
+                              <h4> The mobile number ${mobileNumber} belongs to...</h4>
+                              <p> Lastname : ${lastName} </p>
+                              <p> Firstname : ${firstName} </p>
+                            </div>`
+                $("#queryResult").append(elem);
+                $("#idMobileNumberVerify").val("");
+                showInfo("Mobile number found!");
+            } else {
+              showInfo("Mobile number is not registered yet.");
+            }
 
         });
     }
 
-
+    // got from stackoverflow
     /**
      * Checks if the given string is an address
      *

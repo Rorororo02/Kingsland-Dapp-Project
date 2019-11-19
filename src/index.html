@@ -14,7 +14,7 @@
     <script src="/js/popper.min.js"></script>
     <script src="/bootstrap4/js/bootstrap.min.js"></script>
     <script src="/js/crypto-js.browser.js"></script>
-    <script src="/js/web3.min.js"></script>
+    <script src="https://unpkg.com/ipfs-api/dist/index.js"></script>
     <script src="/js/mobile-number-registry.js"></script>
 
 </head>
@@ -49,7 +49,8 @@
             <h1>Decentralized Mobile Number Registry</h1>
             Welcome to the Decentralized Mobile Number Registry! This distributed app runs on the Ethereum blockchain network and holds a registry of mobile numbers as Solidity smart contract.
             <ul>
-                <li><b>Contract owner</b> can register mobile number to be stored on the blockchain.</li>
+                <li><b>Contract owner</b> can add or remove administrators</li>
+                <li><b>Contract owner</b> and <b>administrators</b>can register mobile numbers.</li>
                 <li><b>Users</b> can view the existence of a mobile number!</li>
                 <li>This application will help you avoid frauds and scams!</li>
             </ul>
@@ -87,16 +88,20 @@
             <h1>Register Mobile Number</h1>
             <p>Contract owners can register (upload) new mobile number to the "Mobile Number Registry" smart contract on the Ethereum blockchain decentralized network.</p>
             <div class="form-group">
+                <label for="idPhoto">Photo ID</label>
+                <input type="file" class="form-control-file" id="idPhoto">
+            </div>
+            <div class="form-group">
                 <label for="idMobileNumber">Mobile Number</label>
                 <input type="text" class="form-control" id="idMobileNumber"  placeholder="Enter mobile number">
             </div>
             <div class="form-group">
-                <label for="idLastName">Lastname</label>
-                <input type="text" class="form-control" id="idLastName"  placeholder="Enter Lastname">
-            </div>
-            <div class="form-group">
                 <label for="idFirstName">Firstname</label>
                 <input type="text" class="form-control" id="idFirstName"  placeholder="Enter Firstname">
+            </div>
+            <div class="form-group">
+                <label for="idLastName">Lastname</label>
+                <input type="text" class="form-control" id="idLastName"  placeholder="Enter Lastname">
             </div>
             <button id="idMobileNumberSubmitButton" type="submit" class="btn btn-primary">Submit</button>
 
@@ -113,6 +118,12 @@
                     <input type="text" class="form-control" id="idMobileNumberVerify"  placeholder="Enter mobile number">
                 </div>
                 <button id="idMobileNumberVerifyButton" type="submit" class="btn btn-info">Verify</button>
+        </div>
+
+        <div class="container">
+            <div class="row"  id="queryResult">
+
+            </div>
         </div>
     </section>
 

@@ -40,3 +40,8 @@ body > section {
 section#viewHome {
     display: block;
 }
+
+#queryResult {
+    margin-top: 50px;
+    padding: 20px;
+}

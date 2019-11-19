@@ -6,6 +6,7 @@ contract MobileNumberRegistry {
     struct MobileNumberData {
         string lastName;
         string firstName;
+        string photoHash;
     }
 
     address private contractOwner;
@@ -45,27 +46,22 @@ contract MobileNumberRegistry {
 
     function addMobileNumber(string memory _mobileNumberHash,
                                 string memory _lastName,
-                                string memory _firstName) public onlyAdministrator {
+                                string memory _firstName,
+                                string memory _photoHash) public onlyAdministrator {
 
         registry[_mobileNumberHash] = MobileNumberData({
             lastName : _lastName,
-            firstName : _firstName
+            firstName : _firstName,
+            photoHash : _photoHash
         });
 
-    }
-
-    function deleteMobileNumber(string memory _mobileNumberHash) public onlyAdministrator {
-        registry[_mobileNumberHash] = MobileNumberData({
-            lastName : "",
-            firstName : ""
-        });
     }
 
     function checkMobileNumber(string memory _mobileNumberHash) public view
-                        returns(string memory, string memory) {
+                        returns(string memory, string memory, string memory) {
 
         MobileNumberData memory md = registry[_mobileNumberHash];
 
-        return(md.lastName, md.firstName);
+        return(md.firstName, md.lastName, md.photoHash);
     }
 }
