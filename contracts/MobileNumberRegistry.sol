@@ -18,6 +18,10 @@ contract MobileNumberRegistry {
         administrators[msg.sender] = true;
     }
 
+    event AddAdministratorEvent(address addr, string message);
+    event DeleteAdministratorEvent(address addr, string message);
+    event AddMobileNumberDataEvent(string mobileNumberHash, string photoHash, string lastName, string firstName, string message);
+
     modifier onlyOwner() {
         require(contractOwner == msg.sender, "Only the contract owner is allowed to do this!");
         _;
@@ -38,10 +42,12 @@ contract MobileNumberRegistry {
 
     function addAdministrator(address _addr) public onlyOwner {
         administrators[_addr] = true;
+        emit AddAdministratorEvent(_addr, "Administrator added");
     }
 
     function deleteAdministrator(address _addr) public onlyOwner {
         administrators[_addr] = false;
+        emit DeleteAdministratorEvent(_addr, "Administrator removed");
     }
 
     function addMobileNumber(string memory _mobileNumberHash,
@@ -54,6 +60,9 @@ contract MobileNumberRegistry {
             firstName : _firstName,
             photoHash : _photoHash
         });
+
+        emit AddMobileNumberDataEvent(_mobileNumberHash, _photoHash, _lastName, _firstName, "New mobile number data added");
+
 
     }
 
