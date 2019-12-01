@@ -1,11 +1,77 @@
 $(document).ready(function () {
-    const MobileNumberRegistryContractAddress = "0xD357263aC12A23e441CDDa889e5211084779fCe9";
+    const MobileNumberRegistryContractAddress = "0xCE56bd618a97562C879f6476a2EDbBe9e900AcDc";
     const MobileNumberRegistryContractABI =  [
       {
         "inputs": [],
         "payable": false,
         "stateMutability": "nonpayable",
         "type": "constructor"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "name": "addr",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "name": "message",
+            "type": "string"
+          }
+        ],
+        "name": "AddAdministratorEvent",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "name": "addr",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "name": "message",
+            "type": "string"
+          }
+        ],
+        "name": "DeleteAdministratorEvent",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "name": "mobileNumberHash",
+            "type": "string"
+          },
+          {
+            "indexed": false,
+            "name": "photoHash",
+            "type": "string"
+          },
+          {
+            "indexed": false,
+            "name": "lastName",
+            "type": "string"
+          },
+          {
+            "indexed": false,
+            "name": "firstName",
+            "type": "string"
+          },
+          {
+            "indexed": false,
+            "name": "message",
+            "type": "string"
+          }
+        ],
+        "name": "AddMobileNumberDataEvent",
+        "type": "event"
       },
       {
         "constant": true,
@@ -187,7 +253,7 @@ $(document).ready(function () {
         $('#infoBox>header').click(function () {
             $('#infoBox').hide();
         });
-        $('#infoBox').delay(5000).fadeOut(300);
+        $('#infoBox').delay(8000).fadeOut(300);
     }
 
     function showError(errorMsg) {
@@ -196,7 +262,7 @@ $(document).ready(function () {
         $('#errorBox>header').click(function () {
             $('#errorBox').hide();
         });
-        $('#errorBox').delay(5000).fadeOut(300);
+        $('#errorBox').delay(8000).fadeOut(300);
     }
 
 
@@ -215,11 +281,12 @@ $(document).ready(function () {
         let contract = web3.eth.contract(MobileNumberRegistryContractABI).at(MobileNumberRegistryContractAddress);
 
         contract.addAdministrator(ethAddr, function(err, txHash) {
-            if(err)
-                return showError("Only the contract owner can add administrators!");
-
-            showInfo(`Successfully added ${ethAddr} as and Administrator. Transaction hash: ${txHash}`);
-            $("#idAddAdminstratorAddress").val("");
+            if(err) {
+              showError("Smart contract call failed: "  + err);
+            } else {
+              $("#idAddAdminstratorAddress").val("");
+              showInfo(`Successfully added ${ethAddr} as an Administrator. Transaction hash: ${txHash}`);
+            }
         });
     }
 
@@ -238,11 +305,13 @@ $(document).ready(function () {
         let contract = web3.eth.contract(MobileNumberRegistryContractABI).at(MobileNumberRegistryContractAddress);
 
         contract.deleteAdministrator(ethAddr, function(err, txHash) {
-            if(err)
-                return showError("Only the contract owner can remove administrators!");
+            if(err) {
+              showError("Smart contract call failed: "  + err);
 
-            showInfo(`Successfully removed ${ethAddr} as an Administrator. Transaction hash: ${txHash}`);
-            $("#idRemoveAdminstratorAddress").val("");
+            } else {
+                showInfo(`Successfully removed ${ethAddr} as an Administrator. Transaction hash: ${txHash}`);
+                $("#idRemoveAdminstratorAddress").val("");
+            }
         });
     }
 
@@ -281,14 +350,16 @@ $(document).ready(function () {
                 if(result) {
                     let ipfsHash = result[0].hash;
                     contract.addMobileNumber(mobileHash, lastName, firstName, ipfsHash, function(err, txHash) {
-                      if(err)
-                          return showError("Only administrators can add mobile number registry!");
+                      if(err) {
+                        showError("Smart contract call failed: "  + err);
 
-                      showInfo(`Mobile number ${mobileNumber} has been added successfully to the registry. Transaction hash: ${txHash}`);
-                      $("#idMobileNumber").val("");
-                      $("#idFirstName").val("");
-                      $('#idLastName').val("");
-                      $('#idPhoto').val("");
+                      } else {
+                        showInfo(`Mobile number ${mobileNumber} has been added successfully to the registry. Transaction hash: ${txHash}`);
+                        $("#idMobileNumber").val("");
+                        $("#idFirstName").val("");
+                        $('#idLastName').val("");
+                        $('#idPhoto').val("");
+                      }
 
                   });
                 }
