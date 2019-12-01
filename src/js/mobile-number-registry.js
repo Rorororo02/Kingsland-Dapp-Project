@@ -288,6 +288,7 @@ $(document).ready(function () {
                       $("#idMobileNumber").val("");
                       $("#idFirstName").val("");
                       $('#idLastName').val("");
+                      $('#idPhoto').val("");
 
                   });
                 }
