@@ -45,3 +45,7 @@ section#viewHome {
     margin-top: 50px;
     padding: 20px;
 }
+
+#queryResult > div > img {
+    width: 250px;
+}
