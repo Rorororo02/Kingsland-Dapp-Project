@@ -125,7 +125,7 @@ $(document).ready(function () {
 
     window.ethereum.enable();
 
-    const IPFS = window.IpfsApi('localhost', '5001');
+    const IPFS = window.IpfsApi('ipfs.infura.io', '5001', {protocol : 'https'});
     const Buffer = IPFS.Buffer;
 
     $('#linkHome').click(function () {
