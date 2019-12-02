@@ -69,6 +69,7 @@ truffle deploy --network ropsten
 $ http-server -p 8000 src/
 ```
 This will run our Decentralized App at http://localhost:8000.
+
 3. Access the app at http://localhost:8000
 
 ## Other App Information
